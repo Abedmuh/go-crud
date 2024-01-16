@@ -42,14 +42,14 @@ func (repository *CollectionRepositoryImpl) Delete(ctx context.Context, tx *sql.
 }
 
 func (repository *CollectionRepositoryImpl) FindById(ctx context.Context, tx *sql.Tx, collectionId int) (domain.Collection, error) {
-	SQL := "select id, name from collection where id = ?"
+	SQL := "select id, name,point,status from collection where id = ?"
 	rows, err := tx.QueryContext(ctx, SQL, collectionId)
 	helper.PanicIfError(err)
 	defer rows.Close()
 
 	collection := domain.Collection{}
 	if rows.Next() {
-		err := rows.Scan(&collection.Id, &collection.Name)
+		err := rows.Scan(&collection.Id, &collection.Name, &collection.Point, &collection.Status)
 		helper.PanicIfError(err)
 		return collection, nil
 	} else {
@@ -58,17 +58,17 @@ func (repository *CollectionRepositoryImpl) FindById(ctx context.Context, tx *sq
 }
 
 func (repository *CollectionRepositoryImpl) FindAll(ctx context.Context, tx *sql.Tx) []domain.Collection {
-	SQL := "select id, name from collection"
+	SQL := "select id, name, point, status from collection"
 	rows, err := tx.QueryContext(ctx, SQL)
 	helper.PanicIfError(err)
 	defer rows.Close()
 
-	var categories []domain.Collection
+	var collections []domain.Collection
 	for rows.Next() {
 		collection := domain.Collection{}
-		err := rows.Scan(&collection.Id, &collection.Name)
+		err := rows.Scan(&collection.Id, &collection.Name, &collection.Point, &collection.Status)
 		helper.PanicIfError(err)
-		categories = append(categories, collection)
+		collections = append(collections, collection)
 	}
-	return categories
+	return collections
 }
