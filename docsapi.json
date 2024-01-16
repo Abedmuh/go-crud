@@ -1,0 +1,256 @@
+{
+    "openapi":"3.0.2",
+    "info": {
+      "title":"Belajar Crud",
+      "version":"1.0"
+    },
+    "servers": [
+      {"url":"https://localhost:3000/"}
+    ],
+    "paths": {
+      "/collection": {
+        "get": {
+          "security": [{
+            "CollectionAuth" : []
+          }],
+          "tags": [
+            "Collection API"
+          ],
+          "description": "List all Collection",
+          "summary": "List all Categories",
+          "responses": {
+            "200": {
+              "description": "Success get all categories",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "code": {
+                        "type": "number"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/collection"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "security": [{
+            "CollectionAuth" : []
+          }],
+          "tags": ["Collection API"],
+          "description": "Create new Collection",
+          "summary": "Create new Collection",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateOrUpdateCollection"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success Create Collection",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "code" : {
+                        "type": "number"
+                      },
+                      "status" : {
+                        "type": "string"
+                      },
+                      "data" : {
+                        "$ref": "#/components/schemas/collection"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        
+      },
+      "/categories/{collectionId}" : {
+        "get" : {
+          "security": [{
+            "CollectionAuth" : []
+          }],
+          "tags": ["Collection API"],
+          "summary": "Get collection by Id",
+          "description": "Get collection by id",
+          "parameters": [
+            {
+              "name": "collectionId",
+              "in": "path",
+              "description": "Collection Id"
+            }
+          ],
+          "responses": {
+            "200" : {
+              "description": "Success get collection",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "code" : {
+                        "type": "number"
+                      },
+                      "status" : {
+                        "type": "string"
+                      },
+                      "data" : {
+                        "$ref": "#/components/schemas/collection"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put" : {
+          "security": [{
+            "CollectionAuth" : []
+          }],
+          "tags": ["Collection API"],
+          "summary": "Update collection by Id",
+          "description": "Update collection by Id",
+          "parameters": [
+            {
+              "name": "collectionId",
+              "in": "path",
+              "description": "Collection Id"
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateOrUpdateCollection"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200" : {
+              "description": "Success get collection",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "code" : {
+                        "type": "number"
+                      },
+                      "status" : {
+                        "type": "string"
+                      },
+                      "data" : {
+                        "$ref": "#/components/schemas/collection"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "security": [{
+            "CollectionAuth" : []
+          }],
+          "tags": ["Collection API"],
+          "summary": "Delete collection by Id",
+          "description": "Delete collection by id",
+          "parameters": [
+            {
+              "name": "collectionId",
+              "in": "path",
+              "description": "Collection Id"
+            }
+          ],
+          "responses": {
+            "200" : {
+              "description": "Success delete collection",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "code" : {
+                        "type": "number"
+                      },
+                      "status" : {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components":{
+      "securitySchemes": {
+        "CollectionAuth" : {
+          "type": "apiKey",
+          "in" : "header",
+          "name": "X-API-Key",
+          "description": "Authentication for Collection API"
+        }
+      },
+      "schemas": {
+        "collection" : {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "number"
+            },
+            "name": {
+              "type": "string"
+            },
+            "poiint": {
+              "type": "number"
+            },
+            "status": {
+              "type": "boolean"
+            }
+          }
+        },
+        "CreateOrUpdateCollection" : {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "poiint": {
+              "type": "number"
+            },
+            "status": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    }
+  }
