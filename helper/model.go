@@ -9,6 +9,8 @@ func ToCollectionResponse(collection domain.Collection) web.CollectionResponse {
 	return web.CollectionResponse{
 		Id:   collection.Id,
 		Name: collection.Name,
+		Point: collection.Point,
+    Status: collection.Status,
 	}
 }
 

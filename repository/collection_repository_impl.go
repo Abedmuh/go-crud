@@ -6,7 +6,6 @@ import (
 	"errors"
 	"belajar-go/go-crud/helper"
 	"belajar-go/go-crud/model/domain"
-	"fmt"
 )
 
 type CollectionRepositoryImpl struct {
@@ -18,7 +17,7 @@ func NewCollectionRepository() CollectionRepository {
 
 func (repository *CollectionRepositoryImpl) Save(ctx context.Context, tx *sql.Tx, collection domain.Collection) domain.Collection {
 	SQL := "insert into collection(name,point,status) values (?,?,?)"
-	result, err := tx.ExecContext(ctx, SQL, collection.Name, collection.Point, collection.Status )
+	result, err := tx.ExecContext(ctx, SQL, collection.Name, collection.Point, collection.Status)
 	helper.PanicIfError(err)
 
 	id, err := result.LastInsertId()
@@ -29,8 +28,8 @@ func (repository *CollectionRepositoryImpl) Save(ctx context.Context, tx *sql.Tx
 }
 
 func (repository *CollectionRepositoryImpl) Update(ctx context.Context, tx *sql.Tx, collection domain.Collection) domain.Collection {
-	SQL := "update collection set name = ? where id = ?"
-	_, err := tx.ExecContext(ctx, SQL, collection.Name, collection.Id)
+	SQL := "update collection set name = ?, point = ?,status = ? where id = ?"
+	_, err := tx.ExecContext(ctx, SQL, collection.Name, collection.Point, collection.Status, collection.Id)
 	helper.PanicIfError(err)
 
 	return collection

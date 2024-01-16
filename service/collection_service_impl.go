@@ -35,6 +35,8 @@ func (service *CollectionServiceImpl) Create(ctx context.Context, request web.Co
 
 	collection := domain.Collection{
 		Name: request.Name,
+		Point: request.Point,
+		Status: request.Status,
 	}
 
 	collection = service.CollectionRepository.Save(ctx, tx, collection)
@@ -56,6 +58,8 @@ func (service *CollectionServiceImpl) Update(ctx context.Context, request web.Co
 	}
 
 	collection.Name = request.Name
+	collection.Point = request.Point
+	collection.Status = request.Status
 
 	collection = service.CollectionRepository.Update(ctx, tx, collection)
 
